@@ -61,7 +61,9 @@ class PaperTradingApp:
     def get_stock_price(self, symbol):
         try:
             stock = yf.Ticker(symbol)
-            price = stock.history(period="1d").iloc[-1]["Close"]
+            price = stock.fast_info.get("currentPrice")
+            if price is None:
+                price = stock.history(period="1d").iloc[-1]["Close"]
             return price
         except Exception as e:
             print(f"\nError fetching price for {symbol}: {e}")
@@ -76,7 +78,9 @@ class PaperTradingApp:
         try:
             quantity = int(input(f"Enter number of shares to buy: "))
             cost = price * quantity
-            if cost > self.balance:
+            if quantity == 0:
+                print("\nInvalid stock quantity.")
+            elif cost > self.balance:
                 print("\nInsufficient balance for this purchase.")
             else:
                 self.balance -= cost
