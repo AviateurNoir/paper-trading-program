@@ -78,7 +78,7 @@ class PaperTradingApp:
         try:
             quantity = int(input(f"Enter number of shares to buy: "))
             cost = price * quantity
-            if quantity == 0:
+            if quantity <= 0:
                 print("\nInvalid stock quantity.")
             elif cost > self.balance:
                 print("\nInsufficient balance for this purchase.")
