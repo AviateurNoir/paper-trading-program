@@ -169,3 +169,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+
+## My Folders to stock data locally
+balance_and_portfolio.csv
+trade_history.csv
