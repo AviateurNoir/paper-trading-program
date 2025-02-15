@@ -60,10 +60,10 @@ class PaperTradingApp:
 
     def get_stock_price(self, symbol):
         try:
-            stock = yf.Ticker(symbol)
-            price = stock.fast_info.get("currentPrice")
+            data = yf.download(symbol, period="1d", interval="1m")
+            price = data["Close"].iloc[-1].item()
             if price is None:
-                price = stock.history(period="1d").iloc[-1]["Close"]
+                price = yf.Ticker(symbol).history(period="1d").iloc[-1]["Close"]
             return price
         except Exception as e:
             print(f"\nError fetching price for {symbol}: {e}")
@@ -72,8 +72,6 @@ class PaperTradingApp:
     def buy_stock(self):
         symbol = input("Enter stock symbol to buy: ").upper()
         price = self.get_stock_price(symbol)
-        if price is None:
-            return
         print(f"Current price of {symbol}: ${price:.2f}")
         try:
             quantity = int(input(f"Enter number of shares to buy: "))
