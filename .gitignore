@@ -171,6 +171,11 @@ cython_debug/
 .pypirc
 
 
-## My Folders to stock data locally
-balance_and_portfolio.csv
+##### My Files
+#Testing or debuging files
+Test.py
+
+#stock data locally
+portfolio.csv
 trade_history.csv
+balance.csv
