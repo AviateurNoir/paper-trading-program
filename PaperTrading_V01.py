@@ -65,7 +65,7 @@ class PaperTradingApp:
         trades_df.to_csv(self.trade_history_file, index=False)
 
     def get_stock_price(self, symbol): ### need to figurre out why this use to work but now it doesn't
-        try:
+        try:                            ### or use beautiful soup to get the price (web scraping)
             data = yf.download(symbol, period="1d", interval="1m")
             price = data["Close"].iloc[-1].item()
             if price is None:
