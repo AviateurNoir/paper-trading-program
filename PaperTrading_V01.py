@@ -64,16 +64,20 @@ class PaperTradingApp:
         
         trades_df.to_csv(self.trade_history_file, index=False)
 
-    def get_stock_price(self, symbol):
+    def get_stock_price(self, symbol): ### need to figurre out why this use to work but now it doesn't
         try:
             data = yf.download(symbol, period="1d", interval="1m")
             price = data["Close"].iloc[-1].item()
             if price is None:
                 price = yf.Ticker(symbol).history(period="1d").iloc[-1]["Close"]
             return price
-        except Exception as e:
-            print(f"\nError fetching price for {symbol}: {e}")
-            return None
+        except:
+            try:
+                price = yf.Ticker(symbol).history(period="1d").iloc[-1]["Close"]
+            except Exception as e:
+                print(f"\nError fetching price for {symbol}: {e}")
+                return None
+            return price
 
     def buy_stock(self):
         symbol = input("Enter stock symbol to buy: ").upper()
